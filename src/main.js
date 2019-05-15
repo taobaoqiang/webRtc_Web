@@ -95,6 +95,9 @@ import '../public/assets/high_charts/solid-gauge'
 // 注册组件后即可使用
 
 Vue.config.productionTip = false
+
+// 生产打包 取消vue所有警告
+Vue.config.silent = true
 Vue.use(ElementUI);
 new Vue({
   router,
