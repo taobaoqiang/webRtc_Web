@@ -29,7 +29,9 @@
       </div> -->
 
       <div class="flex-item-end fw-700 co-ff fz-2rem h125 pf top-right">
-        <div class="flex-center  w50">
+        <div
+          class="flex-center  w50"
+        >
           <img
             class="mute"
             src="../public/assets/voteicon01.png"
@@ -39,7 +41,9 @@
             <p class="mg-l-5 fz-15rem">应到</p>
           </div>
         </div>
-        <div class="flex-center  w50">
+        <div
+          class="flex-center  w50"
+        >
           <img
             class="mute"
             src="../public/assets/voteicon02.png"
@@ -72,6 +76,10 @@
   </div>
 </template>
 <script>
+// import WS from "./worker/worker";
+   
+
+
 export default {
   data() {
     return {
@@ -115,7 +123,21 @@ export default {
       }
     }
   },
-  mounted() {},
+  mounted() {
+    // this.reslve();
+    // this.send();
+  },
+methods: {
+    send() {
+    WS.sendWS();
+  },
+  reslve() {
+    WS.messageWS();
+  },
+  closeFn()
+{
+  WS.closeFn();
+} },
   beforeDestroy() {
     console.log("组建销毁之前");
   },

@@ -93,7 +93,12 @@ html {
 .h100 {
     height: 100%;
 }
-
+.h70{
+    height: 70%;
+}
+.h30 {
+    height: 30%;
+}
 .h60 {
     height: 60%;
 }

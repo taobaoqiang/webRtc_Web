@@ -15,7 +15,6 @@
 </template>
 
 <script>
-// import WS from "../worker/worker";
 export default {
   name: "home",
   components: {
@@ -28,10 +27,7 @@ export default {
   },
   created() {},
   mounted() {
-//  console.log('指针测试', WS.messageWS)
 
-//     WS.messageWS();
-//     WS.sendWS();
   },
   destroyed() {
     // window.onbeforeunload = null;

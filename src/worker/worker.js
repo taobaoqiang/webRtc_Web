@@ -1,31 +1,41 @@
 let myWorker = {};
-let o =null;
+let o = null;
 
 if (window.Worker) {
 
-      myWorker = new SharedWorker('./workerChild.js');
-    o ={
+    myWorker = new Worker('./workerChild.js');
+    o = {
         // 全局共享worker
 
-      
+
         // 接受数据
 
-         messageWS : function () {
-               
+        messageWS:  () => {
+            console.dir(myWorker)
 
-            myWorker.port.onmessage = function (e) {
+
+            myWorker.onmessage = function (e) {
                 console.log('webworke接收到的信息', e)
             }
         },
         // 发送数据
 
-         sendWS  : function (){
-            myWorker.port.postMessage([25, 10, 12, 12, 35, 89])
+        sendWS:  () => {
+            console.log('探针测试send')
+
+            myWorker.postMessage([25, 10, 12, 12, 35, 89])
         },
-        errWS : function () {
+
+        // 报错
+        errWS:  () => {
             myWorker.onerror = function (e) {
-                console.log('There is an error with your worker!',e);
+                console.log('There is an error with your worker!', e);
             }
+        },
+
+        // 结束线程
+        closeFn() {
+            myWorker.terminate()
         }
 
     }
