@@ -73,22 +73,22 @@ export default {
         ]
       ],
       rate_01: {
-        num: "",
+        num: 0,
         them: "",
         data: "",
-        total: ""
+        total: 0
       },
       rate_02: {
-        num: "",
+        num: 0,
         them: "",
         data: "",
-        total: ""
+        total: 0
       },
       rate_03: {
-        num: "",
+        num: 0,
         them: "",
         data: "",
-        total: ""
+        total: 0
       },
 
       message: "",
@@ -122,15 +122,15 @@ export default {
       };
       // 进度统计实到
       this.rate_02 = {
-        num: res.attend,
-        them: res.attend + "人",
+        num: res.sign_number,
+        them: res.sign_number + "人",
         data: "实到",
         total: res.required
       };
       // 进度统计占比
       this.rate_03 = {
-        num: res.attend,
-        them: parseInt((res.attend / res.required)*100) + "%",
+        num: res.sign_number,
+        them: parseInt((res.sign_number / res.required)*100) + "%",
         data: "占比",
         total: res.required
       };

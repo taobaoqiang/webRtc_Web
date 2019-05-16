@@ -93,8 +93,8 @@ export default {
     meetingTips(ne) {
       this.tips = ne.meeting_name;
       this.should = ne.required + "人";
-      this.actually = ne.attend + "人";
-      this.proportion = parseInt((ne.attend / ne.required) * 100) + "%";
+      this.actually = ne.sign_number + "人";
+      this.proportion = parseInt((ne.sign_number / ne.required) * 100) + "%";
       if (this.watchFlag) {
         this.timer = window.setInterval(() => {
           let time = (new Date().getTime() - new Date(ne.start_time)) / 1000; //秒

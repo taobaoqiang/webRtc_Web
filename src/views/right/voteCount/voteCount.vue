@@ -201,24 +201,24 @@ export default {
 
       // 进度统计应到
       this.rate_01 = {
-        num: res.required,
-        them: res.required + "人",
+        num: res.sign_number,
+        them: res.sign_number + "人",
         data: "总人",
-        total: res.required
+        total: res.sign_number
       };
       // 进度统计实到
       this.rate_02 = {
         num: res.vote_number,
         them: res.vote_number + "人",
         data: "已投",
-        total: res.required
+        total: res.sign_number
       };
       // 进度统计占比
       this.rate_03 = {
         num: res.vote_number,
-        them: parseInt((res.vote_number / res.required) * 100) + "%",
+        them: parseInt((res.vote_number / res.vote_number) * 100) + "%",
         data: "进度",
-        total: res.required
+        total: res.sign_number
       };
       this.flagRate = true;
       // 调用子组件
@@ -232,8 +232,8 @@ export default {
     init(t) {
       let ts = t;
       this.secretary_gain = ts.secretary_gain;
-      this.secretary_gain.required = ts.required;
-      this.required = ts.required;
+      this.secretary_gain.required = ts.sign_number;
+      this.required = ts.sign_number;
       this.deputy_secretary_gain = ts.deputy_secretary_gain;
       this.commissioner_gain = ts.commissioner_gain;
       this.party = ts.party.length;

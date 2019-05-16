@@ -19,7 +19,7 @@
         </a>
         <a
           v-else
-          title="点击下线"
+          title="点击暂停直播"
         >
           <img
             @click="close"
@@ -80,7 +80,7 @@
 
           <div class="flex-center-warp">
             <div>
-              <a title="强制踢人">
+              <a title="下麦">
                 <img
                   @click="stopRemoteStream(i.id)"
                   class="status"
@@ -126,12 +126,14 @@
                 src="../../../public/assets/array_01.png"
                 alt=""
               >
-              <img
-                @click="getRemoteStream(i.id,i.id)"
-                class="status"
-                src="../../../public/assets/speech.png"
-                alt=""
-              >
+              <a title="上麦">
+                <img
+                  @click="getRemoteStream(i.id,i.id)"
+                  class="status"
+                  src="../../../public/assets/speech.png"
+                  alt=""
+                >
+              </a>
             </div>
             <div v-else-if="index === 1">
               <img
@@ -139,12 +141,14 @@
                 src="../../../public/assets/array_02.png"
                 alt=""
               >
-              <img
-                @click="getRemoteStream(i.id,i.id)"
-                class="status"
-                src="../../../public/assets/speech.png"
-                alt=""
-              >
+              <a title="上麦">
+                <img
+                  @click="getRemoteStream(i.id,i.id)"
+                  class="status"
+                  src="../../../public/assets/speech.png"
+                  alt=""
+                >
+              </a>
             </div>
             <div v-else-if="index === 2">
               <img
@@ -152,21 +156,25 @@
                 src="../../../public/assets/array_03.png"
                 alt=""
               >
-              <img
-                @click="getRemoteStream(i.id,i.id)"
-                class="status"
-                src="../../../public/assets/speech.png"
-                alt=""
-              >
+              <a title="上麦">
+                <img
+                  @click="getRemoteStream(i.id,i.id)"
+                  class="status"
+                  src="../../../public/assets/speech.png"
+                  alt=""
+                >
+              </a>
             </div>
             <div v-else>
 
-              <img
-                @click="getRemoteStream(i.id,i.id)"
-                class="status"
-                src="../../../public/assets/speech.png"
-                alt=""
-              >
+              <a title="上麦">
+                <img
+                  @click="getRemoteStream(i.id,i.id)"
+                  class="status"
+                  src="../../../public/assets/speech.png"
+                  alt=""
+                >
+              </a>
             </div>
 
             <img
@@ -472,7 +480,7 @@ export default {
 
       let num = this.$store.state.meeting_status.upper.length;
       if (num >= 2) {
-        debugger
+        debugger;
         this.$message({
           message: "请先下线,在上麦 目前最大在麦人数2人! ! !",
           type: "warning"
@@ -486,12 +494,11 @@ export default {
     // 远端拉流 播放
     getRemoteStream(id, send, flag) {
       if (!flag) {
-        let tmp = this.upperFn()
+        let tmp = this.upperFn();
         if (tmp) {
           return true;
         }
       }
-
 
       console.count("远端id是多少", id);
       this.removeAllChild("remoteVideo");
