@@ -39,7 +39,7 @@ import axios from ".././../../fetch/url";
 import showProcess from "../../../components/process_com_highcharts";
 
 export default {
-   components: {
+  components: {
     showProcess
   },
   data() {
@@ -110,10 +110,8 @@ export default {
 
     initProcess(res) {
       // 签到人数
-
-      console.log('这个结果',res.data[1].status)
       if (res.data[1].status !== 2) return;
-  
+
       // 进度统计应到
       this.rate_01 = {
         num: res.sign_number,

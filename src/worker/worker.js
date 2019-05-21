@@ -1,7 +1,7 @@
-let myWorker = {};
 let o = null;
 
 if (window.Worker) {
+let myWorker = {};
 
     myWorker = new Worker('./workerChild.js');
     o = {

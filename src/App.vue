@@ -3,7 +3,7 @@
     id="app"
     class="h100 w100  flex-center-warp-noalign"
   >
-    <p class="fz-2rem co-ff   fw-700  item-time">会议开始时间 <span class="col-green">{{timeIng}}</span></p>
+    <p class="fz-2rem co-ff   fw-700  item-time">会议进行时间 <span class="col-green">{{timeIng}}</span></p>
     <div class="h125 w100">
 
       <div class='top flex-center co-ff w100 h100'>
@@ -29,9 +29,7 @@
       </div> -->
 
       <div class="flex-item-end fw-700 co-ff fz-2rem h125 pf top-right">
-        <div
-          class="flex-center  w50"
-        >
+        <div class="flex-center  w50">
           <img
             class="mute"
             src="../public/assets/voteicon01.png"
@@ -41,9 +39,7 @@
             <p class="mg-l-5 fz-15rem">应到</p>
           </div>
         </div>
-        <div
-          class="flex-center  w50"
-        >
+        <div class="flex-center  w50">
           <img
             class="mute"
             src="../public/assets/voteicon02.png"
@@ -77,8 +73,6 @@
 </template>
 <script>
 // import WS from "./worker/worker";
-   
-
 
 export default {
   data() {
@@ -103,13 +97,13 @@ export default {
       this.should = ne.required + "人";
       this.actually = ne.sign_number + "人";
       this.proportion = parseInt((ne.sign_number / ne.required) * 100) + "%";
-      if (this.watchFlag) {
+      if (this.watchFlag && ne.data[0].status != 1) { 
         this.timer = window.setInterval(() => {
-          let time = (new Date().getTime() - new Date(ne.start_time)) / 1000; //秒
+          let time = (new Date().getTime() - new Date(ne.start_time).getTime()) / 1000; //秒
           let h = parseInt(time / 60 / 60); //小时
           let m = parseInt((time - h * 60 * 60) / 60); //分
           let s = parseInt(time - h * 60 * 60 - m * 60); //秒
-
+   
           this.timeIng =
             (h < 9 ? "0" + h : h) +
             " 小时 " +
@@ -126,18 +120,20 @@ export default {
   mounted() {
     // this.reslve();
     // this.send();
+
+    // console.log(WS);
   },
-methods: {
+  methods: {
     send() {
-    WS.sendWS();
+      WS.sendWS();
+    },
+    reslve() {
+      WS.messageWS();
+    },
+    closeFn() {
+      WS.closeFn();
+    }
   },
-  reslve() {
-    WS.messageWS();
-  },
-  closeFn()
-{
-  WS.closeFn();
-} },
   beforeDestroy() {
     console.log("组建销毁之前");
   },

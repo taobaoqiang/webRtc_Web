@@ -13,7 +13,7 @@
           <img
             @click="close"
             class="img-01"
-            src="../../../public/assets/strat_rtmp.png"
+            src="../../../public/assets/end_rtmp.png"
             alt=""
           >
         </a>
@@ -24,25 +24,34 @@
           <img
             @click="close"
             class="img-01"
-            src="../../../public/assets/end_rtmp.png"
+            src="../../../public/assets/strat_rtmp.png"
             alt=""
           >
         </a>
 
-        <!-- <img
+        <a
           v-if='mcFlag'
-          @click="mcFn"
-          class="img-02"
-          src="../../../public/assets/mc.png"
-          alt=""
+          title="点击禁用音频"
         >
-        <img
+          <img
+            @click="mcFn"
+            class="img-02"
+            src="../../../public/assets/mc.png"
+            alt=""
+          >
+        </a>
+
+        <a
           v-else
-          @click="mcFn"
-          class="img-02"
-          src="../../../public/assets/mc_on.png"
-          alt=""
-        > -->
+          title="点击启用音频"
+        >
+          <img
+            @click="mcFn"
+            class="img-02"
+            src="../../../public/assets/mc_on.png"
+            alt=""
+          >
+        </a>
 
       </div>
       <div
@@ -207,7 +216,7 @@ export default {
       publishUrl: "",
       states: "",
       config: {
-        mode: "live",
+        mode: "rtc",
         codec: "h264"
         // proxyServer: "YOUR NGINX PROXY SERVER IP",
         // turnServer: {
@@ -356,29 +365,13 @@ export default {
     // 单独订阅远端麦克风
     mcFn(uid) {
       if (this.mcFlag) {
-        let _ = this;
-        _.client.on(
-          "stream-subscribed",
-          { video: false, audio: false },
-          function(evt) {
-            var remoteStream = evt.stream;
-            console.log("一订阅" + remoteStream.getId());
-            remoteStream.play("remoteVideo");
-          }
-        );
-
+        // 禁用音轨
+        this.localStream.muteAudio();
         this.mcFlag = false;
       } else {
+        // 启用音频
         this.mcFlag = true;
-        _.client.on(
-          "stream-subscribed",
-          { video: false, audio: true },
-          function(evt) {
-            var remoteStream = evt.stream;
-            console.log("一订阅" + remoteStream.getId());
-            remoteStream.play("remoteVideo");
-          }
-        );
+        this.localStream.unmuteAudio();
       }
       // let t = JSON.stringify({
       //   down: 1,
@@ -571,7 +564,7 @@ export default {
       // 创建音视频流
       return AgoraRTC.createStream({
         streamID: this.uid,
-        audio: false,
+        audio: true,
         video: true,
         screen: false
       });

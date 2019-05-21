@@ -216,7 +216,7 @@ export default {
       // 进度统计占比
       this.rate_03 = {
         num: res.vote_number,
-        them: parseInt((res.vote_number / res.vote_number) * 100) + "%",
+        them: parseInt((res.vote_number / res.sign_number) * 100) + "%",
         data: "进度",
         total: res.sign_number
       };

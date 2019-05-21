@@ -57,8 +57,7 @@ export default {
         require("../../../public//assets//image/开始按钮@2x_n.png")
       ],
 
-      list: list.list,
-  
+      list: list.list
     };
   },
 
@@ -110,6 +109,7 @@ export default {
             this.routerLoading(index);
 
             if (type) {
+              this.startTime();
               this.statusBus(2, index);
             }
           }
@@ -147,6 +147,7 @@ export default {
       }
     },
 
+    // 中间缓冲页面Loading
     routerLoading(index) {
       let q = { flow_step: this.list[index].flow_step };
       this.$router.push({
@@ -155,6 +156,18 @@ export default {
       });
     },
 
+    // 会议开始时间
+    startTime() {
+      let { Y, M, D, h, m, s } = list.dateFormate(new Date());
+      let tmp = Y + "-" + M + "-" + D + " " + h + ":" + m + ":" + s;
+      let data = JSON.stringify({
+        meeting_id: this.meeting_id,
+        start_time: tmp,
+        compere_id: this.host_id
+      });
+      // 发送数据
+      this.$ws.send(data);
+    },
     // 状态更改通知
     statusBus(status, index) {
       let data = JSON.stringify({
@@ -172,9 +185,11 @@ export default {
 
     nextFn(index, flag) {
       let state = this.$store.state.meeting_status;
+
+      // 签到低于百分之八十 不允许进行下一步流程
       if (index === 0 && state.data[0].status == 2) {
         let party = state.required,
-          sign = state.sign.length;
+          sign = state.sign_number;
 
         if (sign / party < 0.8) {
           this.$message({
@@ -184,10 +199,25 @@ export default {
           return true;
         }
       }
+      // 九言禁确认阅读人数低于百分之八十禁止进行下一步
+
+      if (index === 1 && state.data[1].status == 2) {
+        let party = state.sign_number,
+          sign = state.confirm;
+
+        if (sign / party < 0.8) {
+          this.$message({
+            message: "确认阅读人数低于80% 无法进行下一步",
+            type: "warning"
+          });
+          return true;
+        }
+      }
+
+      // 投票人低于百分之八十 不允许进行下一步开始
       if (index === 7 && state.data[7].status == 2) {
-        let party = state.required,
-            sign = state.vote_number;
-            
+        let party = state.sign_number,
+          sign = state.vote_number;
 
         if (sign / party < 0.8) {
           this.$message({
@@ -201,17 +231,15 @@ export default {
     },
 
     // 悬浮提示
-
     titleFn(el, index) {
-
       let states = this.$store.state.meeting_status.data;
       if (states[index].status == 2) {
-       return el.name + "正在进行中";
+        return el.name + "正在进行中";
       }
       if (states[index].status == 4) {
         return el.name + "待开始";
       }
-      return false
+      return false;
     },
 
     // 确定操作

@@ -6,16 +6,10 @@ import '../public/assets/normalize.css'
 import '../public/assets/main.css'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-
 import './config'
-
-
-
-
-
-
 import '../public/assets/high_charts/highcharts-more'
 import '../public/assets/high_charts/solid-gauge'
+// import  './err'
 
 // 注册组件后即可使用
 

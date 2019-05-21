@@ -122,15 +122,37 @@ export default {
     ],
 
     // 数组对象排序
-
     scort(property) {
 
-         return function (obj1, obj2) {
-             var value1 = obj1[property];
-             var value2 = obj2[property];
-             return value2 - value1; // 升序
-         }
+        return function (obj1, obj2) {
+            var value1 = obj1[property];
+            var value2 = obj2[property];
+            return value2 - value1; // 升序
+        }
 
-    }
+    },
+
+    // 时间格式化
+
+    dateFormate(date) {
+        let Y = date.getFullYear();
+        let M = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+        let D = (date.getDate() > 9 ? (date.getDate()) : '0' + (date.getDate()));
+        let h = (date.getHours()) > 9 ? (date.getHours()) : '0' + (date.getHours());
+        let m = (date.getMinutes()) > 9 ? (date.getMinutes()) : '0' + (date.getMinutes());
+        let s = (date.getSeconds()) > 9 ? (date.getSeconds()) : '0' + (date.getSeconds());
+        let str = {
+            Y: Y,
+            M: M,
+            D: D,
+            h: h,
+            m: m,
+            s: s
+
+        };
+        return str
+    },
+
+
 
 }

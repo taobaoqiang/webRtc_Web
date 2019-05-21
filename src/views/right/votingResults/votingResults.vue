@@ -75,9 +75,9 @@
           <span class="co-59F fz-15rem">{{el.gain}}</span><span class="co-99">&nbsp;/&nbsp;票</span>
         </div>
         <process
-          :colors="'#e15244'"
+          :colors="colors"
           :ids="'top'+index"
-          :rates="Math.ceil((100/(party+2)*el.gain))"
+          :rates="parseInt((100/(party)*el.gain))"
           class="process"
         ></process>
       </div>
@@ -95,6 +95,7 @@ export default {
   data() {
     return {
       csStatus: 0,
+      colors : '#e15244',
      
       data: [],
       party: "",
@@ -103,7 +104,7 @@ export default {
   },
   watch: {
     apply: function(ne, ol) {
-      this.party = ne;
+      this.party = ne.sign_number;
      
       this.statusFn(0);
     }
@@ -120,13 +121,7 @@ export default {
     
   },
   // created() {
-  //   let tmr = setInterval(() => {
-  //     if (this.$store.state.meeting_status) {
-  //       window.clearInterval(tmr);
-  //       this.party = this.$store.state.meeting_status.party;
-  //       this.statusFn(0);
-  //     }
-  //   }, 10);
+
   // },
 
   methods: {
