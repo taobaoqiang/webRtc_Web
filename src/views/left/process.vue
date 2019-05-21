@@ -83,6 +83,9 @@ export default {
       });
     },
 
+
+
+
     //路由控制
     routerFn(index) {
       let p = this.list[index].router;

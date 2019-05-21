@@ -3,6 +3,7 @@ import store from './store'
 import Echarts from "echarts";
 Vue.prototype.Echarts = Echarts;
 
+
 function getQueryVariable(variable) {
     var query = window.location.hash.substring(1);
     var vars = query.split("?");
@@ -80,4 +81,3 @@ socket.onopen = function () {
         }
     };
 };
-

@@ -97,13 +97,16 @@ export default {
       this.should = ne.required + "人";
       this.actually = ne.sign_number + "人";
       this.proportion = parseInt((ne.sign_number / ne.required) * 100) + "%";
-      if (this.watchFlag && ne.data[0].status != 1) { 
+      if (this.watchFlag && ne.data[0].status != 1) {
+
+        this.reflashVideo(ne.compere_id,ne.upper)
         this.timer = window.setInterval(() => {
-          let time = (new Date().getTime() - new Date(ne.start_time).getTime()) / 1000; //秒
+          let time =
+            (new Date().getTime() - new Date(ne.start_time).getTime()) / 1000; //秒
           let h = parseInt(time / 60 / 60); //小时
           let m = parseInt((time - h * 60 * 60) / 60); //分
           let s = parseInt(time - h * 60 * 60 - m * 60); //秒
-   
+
           this.timeIng =
             (h < 9 ? "0" + h : h) +
             " 小时 " +
@@ -117,22 +120,28 @@ export default {
       }
     }
   },
-  mounted() {
-    // this.reslve();
-    // this.send();
 
-    // console.log(WS);
+  mounted() {
+
   },
   methods: {
-    send() {
-      WS.sendWS();
+    // 刷新页面后主持人下线
+    reflashVideo(compere_id, upper) {
+      // if 主持人在线 则  刷新后下线主持人
+      let lis = upper.map(el => {
+        return el.id;
+      });
+      if (lis.indexOf(compere_id) !== 1) {
+        let t = JSON.stringify({
+          compere_id: compere_id,
+          down: 1,
+          user_id: compere_id,
+          meeting_id: this.meeting_id
+        });
+
+        this.$ws.send(t);
+      }
     },
-    reslve() {
-      WS.messageWS();
-    },
-    closeFn() {
-      WS.closeFn();
-    }
   },
   beforeDestroy() {
     console.log("组建销毁之前");

@@ -105,7 +105,6 @@ export default {
   watch: {
     apply: function(ne, ol) {
       this.party = ne.sign_number;
-     
       this.statusFn(0);
     }
   },
@@ -116,6 +115,8 @@ export default {
     }
   },
   mounted() {
+      this.party = this.$store.state.meeting_status.sign_number ;
+
     this.statusFn(0);
      
     
