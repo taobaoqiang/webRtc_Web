@@ -3,7 +3,7 @@
     id="app"
     class="h100 w100  flex-center-warp-noalign"
   >
-    <p class="fz-2rem co-ff   fw-700  item-time">会议进行时间 <span class="col-green">{{timeIng}}</span></p>
+    <p  class="fz-2rem co-ff   fw-700  item-time">会议进行时间 <span class="col-green">{{timeIng}}</span></p>
     <div class="h125 w100">
 
       <div class='top flex-center co-ff w100 h100'>

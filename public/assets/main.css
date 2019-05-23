@@ -2,20 +2,8 @@ html,
 body,
 div,
 span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
 p,
-blockquote,
-pre,
 a,
-
 ul,
 audio,
 video {
@@ -68,7 +56,7 @@ body {
 html {
     height: 98.8%;
     font-size: 12px;
-    line-height: 1;
+    /* line-height: 1; */
     background: #2234a7;
 
 }
@@ -87,18 +75,23 @@ html {
 .w95 {
     width: 95%;
 }
+
 .w90 {
     width: 90%;
 }
+
 .h100 {
     height: 100%;
 }
-.h70{
+
+.h70 {
     height: 70%;
 }
+
 .h30 {
     height: 30%;
 }
+
 .h60 {
     height: 60%;
 }
@@ -127,12 +120,15 @@ html {
 .w70 {
     width: 70%;
 }
+
 .w65 {
     width: 65%;
 }
-.w60{
+
+.w60 {
     width: 60%;
 }
+
 .w35 {
     width: 35%;
 }
@@ -153,7 +149,7 @@ html {
     width: 50%;
 }
 
-.w40{
+.w40 {
     width: 40%;
 }
 
@@ -168,6 +164,7 @@ html {
 .co-99 {
     color: #999;
 }
+
 .bg-cc {
     background-color: #333;
 }
@@ -175,9 +172,11 @@ html {
 .fz-8rem {
     font-size: 8rem;
 }
+
 .fz-3rem {
     font-size: 3rem;
 }
+
 .fz-25rem {
     font-size: 2.5rem;
 }
@@ -189,6 +188,7 @@ html {
 .fz-15rem {
     font-size: 1.5rem;
 }
+
 .fz-1rem {
     font-size: 1rem;
 }
@@ -209,7 +209,7 @@ html {
     margin-left: 10px;
 }
 
-.pad-10{
+.pad-10 {
     padding: 10px 0;
 }
 
@@ -222,15 +222,18 @@ html {
 }
 
 .disableds {
-    cursor:not-allowed !important;  
+    cursor: not-allowed !important;
     opacity: 0.6;
     /* pointer-events: none;
     fla */
 
 }
-body{
-    
+.cursor-pointer{
+    cursor: pointer;
 }
+
+body {}
+
 /* flex */
 .flex-center {
     display: flex;
@@ -263,8 +266,14 @@ body{
     justify-content: space-between;
     align-content: center;
 }
+.flex-around-warp-el {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: center;
+}
 
-.flex-between-clumn{
+.flex-between-clumn {
     display: flex;
     justify-content: space-between;
     flex-flow: column wrap;
@@ -283,6 +292,10 @@ body{
 .flex-item-end {
     display: flex;
     align-self: flex-end;
+}
+.flex-item-top {
+    display: flex;
+    align-self: flex-start;
 }
 
 .flex-between-con {
@@ -306,11 +319,13 @@ body{
     align-items: center;
 }
 
-.flex-start {
+
+.flex-start-warp {
     display: flex;
     justify-content: flex-start;
     align-items: center;
 }
+
 .flex-end {
     display: flex;
     justify-content: flex-end;
@@ -336,6 +351,7 @@ body{
 .ov-auto {
     overflow: auto;
 }
+
 .mg-auto {
     margin: auto;
 }
@@ -349,6 +365,5 @@ body{
 }
 
 .co-59F {
-    color : #509FFE;
+    color: #509FFE;
 }
-

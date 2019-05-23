@@ -1,7 +1,7 @@
 <template>
   <div class="w100 h100">
     <div
-      class="h70"
+      class="h70 ov-auto"
       v-html="content"
     >
 
@@ -129,7 +129,8 @@ export default {
       // 进度统计占比
       this.rate_03 = {
         num: res.confirm,
-        them: parseInt((res.confirm / res.sign_number) * 100) + "%",
+        them: parseInt((res.sign_number ==0 ? 0 :  res.confirm / res.sign_number ) * 100) + "%",
+      
         data: "占比",
         total: res.sign_number
       };

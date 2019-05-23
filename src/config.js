@@ -2,6 +2,7 @@ import Vue from "vue"
 import store from './store'
 import Echarts from "echarts";
 Vue.prototype.Echarts = Echarts;
+Vue.prototype.imgSrc = 'https://file.shyunhua.com/';
 
 
 function getQueryVariable(variable) {

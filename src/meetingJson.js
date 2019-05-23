@@ -96,7 +96,7 @@ export default {
             status: "0"
         },
         {
-            name: "选举结果",
+            name: "投票结果",
             flow_step: 9,
             present: "宣布正式候选人名单的批复",
             router: "/votingResults",

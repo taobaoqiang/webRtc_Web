@@ -6,7 +6,7 @@
         :key="index"
         class="w95 flex-around lis"
       >
-        <div class="flex-start w70">
+        <div class="flex-start-warp  w70">
           <img
             class="icon"
             :src="i.src"
@@ -82,8 +82,6 @@ export default {
         this.controlProcessStart(el.status, index, false);
       });
     },
-
-
 
 
     //路由控制
@@ -207,6 +205,7 @@ export default {
       if (index === 1 && state.data[1].status == 2) {
         let party = state.sign_number,
           sign = state.confirm;
+          
 
         if (sign / party < 0.8) {
           this.$message({

@@ -38,7 +38,18 @@ let obj = {
         })
     },
 
-    // 
+    // 查看详情
+    getUserInfo (data){
+
+        console.log('点了嘛')
+           return axios.get('/Meeting_UserInfo', {
+               params: data
+           }).then(res => {
+               return res.data
+           }).catch(err => {
+               return err
+           })
+    } ,
 
 
 }
