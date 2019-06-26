@@ -96,7 +96,7 @@ export default {
                 y:
                   Number(this.rate.num / this.rate.total) *
                   100 *
-                  0.65.toFixed(2)
+                  (0.65).toFixed(2)
               }
             ]
           }
@@ -127,5 +127,6 @@ export default {
 <style scoped>
 .show {
   width: 300px;
+  height: auto;
 }
 </style>

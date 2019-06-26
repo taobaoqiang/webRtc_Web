@@ -11,7 +11,7 @@ function getQueryVariable(variable) {
 
     vars = vars[1].split('&')
 
-    // 重置console.log()
+    // // 重置console.log()
 
     //  if (!global.consoleSwitch) {
     //    console.log = () => {}
@@ -39,13 +39,13 @@ if (window.localStorage.getItem('meeting_id') !== getQueryVariable("meeting_id")
     meeting_id = window.localStorage.getItem('meeting_id');
 
 }
-if (window.localStorage.getItem('host_id') !== getQueryVariable("host_id") && getQueryVariable("host_id")) {
-    host_id = getQueryVariable("host_id")
-    window.localStorage.setItem('host_id', getQueryVariable("host_id"));
+if (window.localStorage.getItem('compere_id') !== getQueryVariable("compere_id") && getQueryVariable("compere_id")) {
+    host_id = getQueryVariable("compere_id")
+    window.localStorage.setItem('compere_id', getQueryVariable("compere_id"));
 
 
 } else {
-    host_id = window.localStorage.getItem('host_id');
+    host_id = window.localStorage.getItem('compere_id');
 
 }
 

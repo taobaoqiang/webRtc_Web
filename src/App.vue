@@ -3,7 +3,7 @@
     id="app"
     class="h100 w100  flex-center-warp-noalign"
   >
-    <p  class="fz-2rem co-ff   fw-700  item-time">会议进行时间 <span class="col-green">{{timeIng}}</span></p>
+    <p class="fz-2rem co-ff   fw-700  item-time">会议进行时间 <span class="col-green">{{timeIng}}</span></p>
     <div class="h125 w100">
 
       <div class='top flex-center co-ff w100 h100'>
@@ -98,8 +98,7 @@ export default {
       this.actually = ne.sign_number + "人";
       this.proportion = parseInt((ne.sign_number / ne.required) * 100) + "%";
       if (this.watchFlag && ne.data[0].status != 1) {
-
-        this.reflashVideo(ne.compere_id,ne.upper)
+        this.reflashVideo(ne.compere_id, ne.upper);
         this.timer = window.setInterval(() => {
           let time =
             (new Date().getTime() - new Date(ne.start_time).getTime()) / 1000; //秒
@@ -121,9 +120,7 @@ export default {
     }
   },
 
-  mounted() {
-
-  },
+  mounted() {},
   methods: {
     // 刷新页面后主持人下线
     reflashVideo(compere_id, upper) {
@@ -134,14 +131,14 @@ export default {
       if (lis.indexOf(compere_id) !== 1) {
         let t = JSON.stringify({
           compere_id: compere_id,
-          down: 1,
+          downer: 1,
           user_id: compere_id,
           meeting_id: this.meeting_id
         });
 
         this.$ws.send(t);
       }
-    },
+    }
   },
   beforeDestroy() {
     console.log("组建销毁之前");

@@ -1,10 +1,13 @@
 <template>
   <div>
 
-    <div class="h70" v-html="content">
+    <div
+      class="h70"
+      v-html="content"
+    >
 
     </div>
- <div
+    <div
       class="w100 h30 flex-around-shrink ov-auto"
       v-if='flag'
     >
@@ -36,15 +39,14 @@
 import axios from ".././../../fetch/url";
 import showProcess from "../../../components/process_com_highcharts";
 
-
 export default {
-    components: {
+  components: {
     showProcess
   },
   data() {
     return {
       content: "",
-       flag: false,
+      flag: false,
       colors: [
         [
           [0, "#9265E9"], // end
@@ -91,13 +93,11 @@ export default {
     }
   },
   created() {
-    
     this.init();
   },
-    mounted() {
+  mounted() {
     this.initProcess(this.$store.state.meeting_status);
   },
-  mounted() {},
   methods: {
     async init() {
       let data = {
@@ -108,9 +108,9 @@ export default {
       let res = await axios.mettingFlow(data);
       this.content = res.data.data[0].flow_content;
     },
-    
+
     initProcess(res) {
-   
+      console.log("进度统计应到" + res);
       // 进度统计应到
       this.rate_01 = {
         num: res.sign_number,
@@ -120,15 +120,16 @@ export default {
       };
       // 进度统计实到
       this.rate_02 = {
-        num: res.confirm,
-        them: res.confirm + "人",
+        num: res.confirm.length,
+        them: res.confirm.length + "人",
         data: "已阅",
         total: res.sign_number
       };
       // 进度统计占比
       this.rate_03 = {
-        num: res.confirm,
-        them: parseInt((res.confirm / res.sign_number) * 100) + "%",
+        num: res.confirm.length,
+        them:
+          parseInt((res.confirm.length / (res.sign_number || 1)) * 100) + "%",
         data: "占比",
         total: res.sign_number
       };

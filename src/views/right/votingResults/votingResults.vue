@@ -95,11 +95,10 @@ export default {
   data() {
     return {
       csStatus: 0,
-      colors : '#e15244',
-     
+      colors: "#e15244",
+
       data: [],
-      party: "",
-      
+      party: ""
     };
   },
   watch: {
@@ -115,20 +114,15 @@ export default {
     }
   },
   mounted() {
-      this.party = this.$store.state.meeting_status.sign_number ;
+    this.party = this.$store.state.meeting_status.sign_number;
 
     this.statusFn(0);
-     
-    
   },
   // created() {
 
   // },
 
   methods: {
-
-
-
     statusFn(a) {
       let data = this.$store.state.meeting_status;
       switch (a) {
@@ -242,6 +236,12 @@ export default {
 .bottom {
   height: 300px;
   width: 100%;
+}
+.flex-start {
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
 }
 </style>
 

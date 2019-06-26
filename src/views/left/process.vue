@@ -74,6 +74,10 @@ export default {
       this.recover(ne);
     }
   },
+  mounted() {
+    this.recover(this.$store.state.meeting_status.data);
+  },
+
   methods: {
     // 刷新状态恢复
     recover(data) {
@@ -82,7 +86,6 @@ export default {
         this.controlProcessStart(el.status, index, false);
       });
     },
-
 
     //路由控制
     routerFn(index) {
@@ -205,7 +208,6 @@ export default {
       if (index === 1 && state.data[1].status == 2) {
         let party = state.sign_number,
           sign = state.confirm;
-          
 
         if (sign / party < 0.8) {
           this.$message({

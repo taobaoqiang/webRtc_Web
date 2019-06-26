@@ -121,16 +121,20 @@ export default {
       };
       // 进度统计实到
       this.rate_02 = {
-        num: res.confirm,
-        them: res.confirm + "人",
+        num: res.confirm.length,
+        them: res.confirm.length + "人",
         data: "已阅",
         total: res.sign_number
       };
       // 进度统计占比
       this.rate_03 = {
-        num: res.confirm,
-        them: parseInt((res.sign_number ==0 ? 0 :  res.confirm / res.sign_number ) * 100) + "%",
-      
+        num: res.confirm.length,
+        them:
+          parseInt(
+            (res.sign_number == 0 ? 0 : res.confirm.length / res.sign_number) *
+              100
+          ) + "%",
+
         data: "占比",
         total: res.sign_number
       };

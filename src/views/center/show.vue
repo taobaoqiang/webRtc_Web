@@ -36,7 +36,7 @@
           <img
             @click="mcFn"
             class="img-02"
-            src="../../../public/assets/mc.png"
+            src="../../../public/assets/mc_on.png"
             alt=""
           >
         </a>
@@ -48,7 +48,7 @@
           <img
             @click="mcFn"
             class="img-02"
-            src="../../../public/assets/mc_on.png"
+            src="../../../public/assets/mc.png"
             alt=""
           >
         </a>
@@ -212,7 +212,7 @@ export default {
       uid: 2564,
       flag: true,
       watchFlag: true,
-      mcFlag: true,
+      mcFlag: false,
       publishUrl: "",
       states: "",
       config: {
@@ -270,14 +270,12 @@ export default {
       });
     },
 
-
-
     // 初始化
     init() {
       //
       console.log("流程初始化");
       this.clientFn();
-      // this.addRoom(this.meeting_id, this.states.compere_id);
+      this.addRoom(this.meeting_id, this.states.compere_id);
       // 播放本地视频
       this.localPlay();
       // this.pubLish()
@@ -434,6 +432,7 @@ export default {
       });
 
       this.client.on("stream-published", evt => {
+        this.mcFlag = true;
         this.hostFn(this.states.compere_id);
         console.log("推流成功", evt);
         this.flag = false;
@@ -448,10 +447,11 @@ export default {
       });
       let t = JSON.stringify({
         compere_id: this.host_id,
-        down: 1,
+        downer: 1,
         user_id: this.states.compere_id,
         meeting_id: this.meeting_id
       });
+      this.mcFlag = false;
 
       this.$ws.send(t);
       this.flag = true;
@@ -550,7 +550,7 @@ export default {
       let _ = this;
       let t = JSON.stringify({
         compere_id: this.host_id,
-        down: 1,
+        downer: 1,
         user_id: uid,
         meeting_id: this.meeting_id
       });
@@ -574,7 +574,7 @@ export default {
     beforeDestroy() {
       let t = JSON.stringify({
         compere_id: this.host_id,
-        down: 1,
+        downer: 1,
         user_id: uid,
         meeting_id: this.meeting_id
       });
