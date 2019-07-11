@@ -220,7 +220,7 @@ export default {
 
       // 投票人低于百分之八十 不允许进行下一步开始
       if (index === 7 && state.data[7].status == 2) {
-        let party = state.sign_number,
+        let party = state.sign_party,
           sign = state.vote_number;
 
         if (sign / party < 0.8) {

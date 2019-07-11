@@ -50,7 +50,7 @@ if (window.localStorage.getItem('compere_id') !== getQueryVariable("compere_id")
 }
 
 
-
+host_id = parseInt(host_id) + 100000000
 
 
 var socket = new WebSocket('wss://apijcdj.shyunhua.com:1234?meet_commit=' + meeting_id);
@@ -75,9 +75,12 @@ socket.onopen = function () {
         if (res.data !== '连接成功') {
 
 
-            if (tmpsco !== res.data) {
+            if ((tmpsco !== res.data) && res.data) {
                 tmpsco = res.data
-                store.commit('meet_commit', JSON.parse(res.data))
+
+                let data = JSON.parse(res.data)
+                data.compere_id = parseInt(data.compere_id) + 100000000;
+                store.commit('meet_commit', data)
             }
         }
     };

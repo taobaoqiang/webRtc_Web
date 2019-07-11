@@ -2,11 +2,13 @@
   <div>
     <div class="w95 items">
       <ul class="w100 flex-start">
+
         <li
           v-for="(el,index) in tableData"
           :key="index"
           class="lis"
         > <span class="sps">{{index +1}}</span><span>{{el.name}}</span></li>
+
       </ul>
     </div>
   </div>
@@ -22,8 +24,6 @@ export default {
 };
 </script>
 <style scoped>
-
-
 .items {
   margin: 0 auto;
 }
@@ -36,6 +36,13 @@ export default {
   background-color: #dcdcdc;
 }
 .sps {
-  padding:0 0.5em 0 0;
+  padding: 0 0.5em 0 0;
+}
+.flex-start {
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+  flex-flow: wrap;
 }
 </style>

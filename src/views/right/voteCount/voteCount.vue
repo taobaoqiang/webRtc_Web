@@ -1,86 +1,5 @@
 <template>
   <div class="w95 m-auto h100">
-    <div class="flex-start fz-2rem">
-      <p :class="flag ? 'candidate' : ''">候选人票数统计</p>
-      <!-- <img
-        @click="change"
-        class="change"
-        src="../../../../public/assets/right_image/2019-04-11_131948.png"
-        alt=""
-      >
-      <p :class="flag ? '' : 'candidate'">另选人票数统计</p> -->
-    </div>
-
-    <!-- 书记候选人 -->
-
-    <div class="w100 h55 ov-auto">
-
-      <div class="vote">
-        <p class="fz-15rem fw-700 t-l pad-10">书记候选人</p>
-        <div
-          v-for="(el,index) in secretary_gain"
-          :key="index+'a'"
-        >
-          <p class="t-l fz-15rem co-99">{{el.name}}</p>
-          <div class="process flex-between">
-            <process
-              :colors="'#FF99CC'"
-              :ids="'top'+index"
-              :rates="Math.ceil((100/required)*el.gain)"
-              class="w90 h100"
-            ></process>
-            <p><span
-                class="fz-15rem fw-700"
-                style="color:#FF99CC;"
-              >{{el.gain}}</span> <span class="co-99"> /票</span></p>
-          </div>
-        </div>
-      </div>
-
-      <div class="vote">
-        <p class="fz-15rem fw-700 t-l pad-10">副书记候选人</p>
-        <div
-          v-for="(el,index) in deputy_secretary_gain"
-          :key="index+'b'"
-        >
-          <p class="t-l fz-15rem co-99">{{el.name}}</p>
-          <div class="process flex-between">
-            <process
-              :colors='colorFn(index)'
-              :ids='index'
-              :rates="Math.ceil((100/(required))*el.gain)"
-              class="w90 h100"
-            ></process>
-            <p><span
-                class="fz-15rem fw-700"
-                :style='`color:${colorFn(index)}`'
-              >{{el.gain}}</span> <span class="co-99"> /票</span></p>
-          </div>
-        </div>
-      </div>
-      <!-- 委员候选人 -->
-      <div class="vote">
-        <p class="fz-15rem fw-700 t-l pad-10">委员候选人</p>
-        <div
-          v-for="(el,index) in commissioner_gain"
-          :key='index+"c"'
-        >
-          <p class="t-l fz-15rem co-99">{{el.name}}</p>
-          <div class="process flex-between">
-            <process
-              :colors='colorFn(index)'
-              :ids='index+"cn"'
-              :rates="Math.ceil((100/required)*el.gain)"
-              class="w90 h100"
-            ></process>
-            <p><span
-                class="fz-15rem fw-700"
-                :style='`color:${colorFn(index)}`'
-              >{{el.gain}}</span> <span class="co-99"> /票</span></p>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div
       class="w100 flex-around-shrink ov-auto bottom"
@@ -111,11 +30,10 @@
   </div>
 </template>
 <script>
-import process from "../../../components/process_com";
 import showProcess from "../../../components/process_com_highcharts";
 
 export default {
-  components: { process, showProcess },
+  components: { showProcess },
   data() {
     return {
       party: "",
@@ -199,24 +117,24 @@ export default {
 
       // 进度统计应到
       this.rate_01 = {
-        num: res.sign_number,
-        them: res.sign_number + "人",
+        num: res.sign_party,
+        them: res.sign_party + "人",
         data: "总人",
-        total: res.sign_number
+        total: res.sign_party
       };
       // 进度统计实到
       this.rate_02 = {
         num: res.vote_number,
         them: res.vote_number + "人",
         data: "已投",
-        total: res.sign_number
+        total: res.sign_party
       };
       // 进度统计占比
       this.rate_03 = {
         num: res.vote_number,
-        them: parseInt((res.vote_number / (res.sign_number || 1)) * 100) + "%",
+        them: parseInt((res.vote_number / (res.sign_party || 1)) * 100) + "%",
         data: "进度",
-        total: res.sign_number
+        total: res.sign_party
       };
       this.flagRate = true;
       // 调用子组件
@@ -230,8 +148,8 @@ export default {
     init(t) {
       let ts = t;
       this.secretary_gain = ts.secretary_gain;
-      this.secretary_gain.required = ts.sign_number;
-      this.required = ts.sign_number;
+      this.secretary_gain.required = ts.sign_party;
+      this.required = ts.sign_party;
       this.deputy_secretary_gain = ts.deputy_secretary_gain;
       this.commissioner_gain = ts.commissioner_gain;
       this.party = ts.party.length;

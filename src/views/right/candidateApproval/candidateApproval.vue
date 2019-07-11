@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="w100 h100">
 
     <div
-      class="h70"
+      class="h70 ov-auto"
       v-html="content"
     >
 

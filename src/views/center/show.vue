@@ -29,7 +29,7 @@
           >
         </a>
 
-        <a
+        <!-- <a
           v-if='mcFlag'
           title="点击禁用音频"
         >
@@ -39,9 +39,9 @@
             src="../../../public/assets/mc_on.png"
             alt=""
           >
-        </a>
+        </a> -->
 
-        <a
+        <!-- <a
           v-else
           title="点击启用音频"
         >
@@ -51,7 +51,7 @@
             src="../../../public/assets/mc.png"
             alt=""
           >
-        </a>
+        </a> -->
 
       </div>
       <div
@@ -236,14 +236,15 @@ export default {
     apply: function(ne, ol) {
       this.states = ne;
 
-      // this.pubLish();
-
-      if (this.watchFlag) {
-        // 加入房间
-        // this.revover(ne)
-        this.addRoom(this.meeting_id, this.states.compere_id);
-        this.watchFlag = false;
-      }
+      // // this.pubLish();
+      // // this.revover(ne);
+      // // console.log("状态更新", ne);
+      // if (this.watchFlag) {
+      //   // 加入房间
+      //   // this.addRoom(this.meeting_id, this.states.compere_id);
+      //   this.watchFlag = false;
+      // }
+      // }
     }
   },
 
@@ -255,6 +256,7 @@ export default {
 
   mounted() {
     this.init();
+    this.revover(this.$store.state.meeting_status);
   },
   methods: {
     // 刷新页面恢复
@@ -263,9 +265,17 @@ export default {
       console.log("刷新页面恢复", ne, ne.upper, ne.compere_id);
 
       ne.upper.map(el => {
-        if (el.id === ne.compere_id) {
-          this.flag = false;
-          this.pubLish();
+        console.log("哈哈哈哈", el.id, ne.compere_id);
+
+        if (el.id == ne.compere_id) {
+          let t = JSON.stringify({
+            compere_id: this.host_id,
+            downer: 1,
+            user_id: this.host_id,
+            meeting_id: this.meeting_id
+          });
+
+          this.$ws.send(t);
         }
       });
     },
@@ -275,7 +285,7 @@ export default {
       //
       console.log("流程初始化");
       this.clientFn();
-      this.addRoom(this.meeting_id, this.states.compere_id);
+      this.addRoom(this.meeting_id, this.host_id);
       // 播放本地视频
       this.localPlay();
       // this.pubLish()
@@ -362,6 +372,17 @@ export default {
       }
     },
 
+    // 确定操作
+    confirm(callback) {
+      this.$confirm("你确定要下线主持人嘛?", "提示 ! ! !", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(callback)
+        .catch();
+    },
+
     // 单独订阅远端麦克风
     mcFn(uid) {
       if (this.mcFlag) {
@@ -433,7 +454,7 @@ export default {
 
       this.client.on("stream-published", evt => {
         this.mcFlag = true;
-        this.hostFn(this.states.compere_id);
+        this.hostFn();
         console.log("推流成功", evt);
         this.flag = false;
       });
@@ -448,7 +469,7 @@ export default {
       let t = JSON.stringify({
         compere_id: this.host_id,
         downer: 1,
-        user_id: this.states.compere_id,
+        user_id: this.host_id,
         meeting_id: this.meeting_id
       });
       this.mcFlag = false;
@@ -458,13 +479,15 @@ export default {
     },
 
     // 主持人本地上线
-    hostFn(data) {
+    hostFn() {
       let t = JSON.stringify({
         compere_id: this.host_id,
         upper: 1,
-        user_id: data,
+        user_id: this.host_id,
         meeting_id: this.meeting_id
       });
+      // debugger;
+
       this.$ws.send(t);
     },
 
@@ -539,22 +562,38 @@ export default {
 
     // 停止订阅远端视频
     stopRemoteStream(uid) {
-      this.removeAllChild("remoteVideo");
-
-      // 专吃人下麦改变状态
-      if (uid == this.states.compere_id) {
-        this.flag = true;
-      }
-
-      // 下麦操作
       let _ = this;
-      let t = JSON.stringify({
-        compere_id: this.host_id,
-        downer: 1,
-        user_id: uid,
-        meeting_id: this.meeting_id
-      });
-      _.$ws.send(t);
+      // 主持人下麦改变状态
+      if (uid == this.states.compere_id) {
+        this.confirm(() => {
+          this.flag = true;
+          this.client.unpublish(this.localStream, err => {
+            console.log("取消推送成功");
+          });
+          this.mcFlag = false;
+          console.log("取消推送失败");
+
+          // 下麦操作
+          let t = JSON.stringify({
+            compere_id: this.host_id,
+            downer: 1,
+            user_id: this.states.compere_id,
+            meeting_id: this.meeting_id
+          });
+          _.$ws.send(t);
+        });
+      } else {
+        // 下麦操作
+        this.removeAllChild("remoteVideo");
+
+        let t = JSON.stringify({
+          compere_id: this.host_id,
+          downer: 1,
+          user_id: uid,
+          meeting_id: this.meeting_id
+        });
+        _.$ws.send(t);
+      }
 
       // //     // 取消订阅
       // _.client.unsubscribe(this.playStram, function(err) {

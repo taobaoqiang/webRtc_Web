@@ -105,10 +105,13 @@ export default {
       this.init(ne);
     }
   },
+  mounted() {
+    this.init(this.states);
+  },
   methods: {
     init(res) {
       // 签到人数
-      if (res.data[0].status !==2 || !res.sign) return;
+      if (res.data[0].status !== 2 || !res.sign) return;
       this.tableData = res.sign.map((el, index) => {
         return { name: el.name };
       });
@@ -130,7 +133,7 @@ export default {
       // 进度统计占比
       this.rate_03 = {
         num: res.sign_number,
-        them: parseInt((res.sign_number / res.required)*100) + "%",
+        them: parseInt((res.sign_number / res.required) * 100) + "%",
         data: "占比",
         total: res.required
       };

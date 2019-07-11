@@ -46,14 +46,14 @@
         >{{index+1}}</p>
       </div>
 
-      <div class="flex-start m-l w35">
-
+      <div
+        class="m-l cursor-pointer"
+        @click="getUserInfo(el.id)"
+      >
+        <!-- 
         <div>
-          <img
-            class='img'
-            :src="el.image ? image : 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2729496447,601812172&fm=26&gp=0.jpg'"
-          />
-        </div>
+          <span class="fz-2rem fw-700"> {{el.name.substr(0,1)}}</span>
+        </div> -->
 
         <div class="b-info flex-between-clumn w90">
           <div class='flex-between w90 sp-pad'>
@@ -69,7 +69,7 @@
 
       </div>
 
-      <div class="w50">
+      <div class="w65">
 
         <div class="flex-end">
           <span class="co-59F fz-15rem">{{el.gain}}</span><span class="co-99">&nbsp;/&nbsp;票</span>
@@ -83,27 +83,42 @@
       </div>
 
     </div>
+
+    <div class="info">
+
+      <info
+        v-show="flag"
+        ref="userInfo"
+        class="info"
+        :style="styles"
+        :userData="userInfo"
+        v-on:closeFn="closeFn"
+      ></info>
+    </div>
+
   </div>
 
 </template>
 <script>
 import process from "../../../components/process_com";
-
+import fetch from "../../../fetch/url";
+import info from "../../../components/user_info";
 import scort from "../../../meetingJson";
 export default {
-  components: { process },
+  components: { process, info },
   data() {
     return {
       csStatus: 0,
       colors: "#e15244",
-
+      userInfo: "",
       data: [],
-      party: ""
+      party: "",
+      flag: false
     };
   },
   watch: {
     apply: function(ne, ol) {
-      this.party = ne.sign_number;
+      this.party = ne.party_number;
       this.statusFn(0);
     }
   },
@@ -114,7 +129,7 @@ export default {
     }
   },
   mounted() {
-    this.party = this.$store.state.meeting_status.sign_number;
+    this.party = this.$store.state.meeting_status.party_number;
 
     this.statusFn(0);
   },
@@ -123,6 +138,49 @@ export default {
   // },
 
   methods: {
+    // 查看人员详情
+    async getUserInfo(id) {
+      this.flag = false;
+      this.getFixd(event);
+      let data = {
+        user_id: id,
+        meeting_id: this.meeting_id
+      };
+
+      let res = await fetch.getUserInfo(data);
+      console.log(res.data.data);
+      if (res.data.data.length) {
+        this.userInfo = res.data.data;
+      } else {
+        this.userInfo = [
+          {
+            introduction: "暂无详情"
+          }
+        ];
+      }
+
+      this.flag = true;
+    },
+
+    // 详情展示定位
+    getFixd(e) {
+      console.log(e);
+      let el = this.$refs.userInfo;
+      let str =
+        "position: absolute;top :" +
+        +(e.clientY + 20) +
+        "px; left:" +
+        (e.clientX + 20) +
+        "px";
+
+      // 设置样式
+      this.styles = str;
+    },
+
+    closeFn() {
+      this.flag = false;
+    },
+
     statusFn(a) {
       let data = this.$store.state.meeting_status;
       switch (a) {
@@ -242,6 +300,13 @@ export default {
   justify-content: flex-start;
   align-content: center;
   align-items: center;
+}
+
+.info {
+  background-color: #fff;
+  max-width: 380px;
+  max-height: 240px;
+  overflow: auto;
 }
 </style>
 
