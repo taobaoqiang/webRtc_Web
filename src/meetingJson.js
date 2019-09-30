@@ -60,7 +60,7 @@ export default {
             status: "0"
         },
         {
-            name: "监票人名单",
+            name: "监票人建议名单",
             flow_step: 6,
             present: "宣布正式候选人名单的批复",
             router: "/CheckList",

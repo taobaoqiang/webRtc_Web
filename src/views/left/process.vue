@@ -203,8 +203,9 @@ export default {
           return true;
         }
       }
-      // 九言禁确认阅读人数低于百分之八十禁止进行下一步
 
+
+      // 九言禁确认阅读人数低于百分之八十禁止进行下一步
       if (index === 1 && state.data[1].status == 2) {
         let party = state.sign_number,
           sign = state.confirm;
@@ -212,6 +213,20 @@ export default {
         if (sign / party < 0.8) {
           this.$message({
             message: "确认阅读人数低于80% 无法进行下一步",
+            type: "warning"
+          });
+          return true;
+        }
+      }
+
+            // 监票人建议名单低于百分之50 不允许进行下一步流程
+      if (index == 5 && state.data[5].status == 2) {
+        let applay = state.confirm.length,
+            party = state.party.length;
+     
+        if (applay / party < 0.5) {
+          this.$message({
+            message: "通过人数低于50% 无法进行下一步",
             type: "warning"
           });
           return true;
