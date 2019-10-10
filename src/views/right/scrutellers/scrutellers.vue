@@ -1,10 +1,14 @@
 <template>
   <div class="w100 h100">
     <div
-      class="h70 ov-auto"
-      v-html="content"
+      ref="container"
+      class="h70 ov-auto pr"
+    
     >
-
+    <div  v-html="content">
+      
+    </div>
+    <img class="imgs" v-show="showImg" width="148" height="130" src="../../../../public/assets/right_image/watermark.png" alt="hhh">
     </div>
     <div
       class="w100 h30 flex-around-shrink ov-auto"
@@ -46,6 +50,7 @@ export default {
     return {
       content: "",
       flag: false,
+      showImg : true,
       colors: [
         [
           [0, "#9265E9"], // end
@@ -96,8 +101,13 @@ export default {
   },
   mounted() {
     this.initProcess(this.$store.state.meeting_status);
+ 
   },
   methods: {
+    //获取显示内容元素
+
+
+
     async init() {
       let data = {
         meeting_id: this.meeting_id,
@@ -133,6 +143,10 @@ export default {
         data: "占比",
         total: res.sign_number
       };
+
+      if((res.confirm.length / (res.sign_number || 1 ))>0.5) {
+        this.showImg = false;
+      }
       this.flag = true;
 
       // 调用子组件
@@ -147,5 +161,14 @@ export default {
 </script>
 
 <style scoped>
+.imgs {
+
+position: absolute;
+
+right:15%;
+z-index: 1;
+transform: translate(0 ,-300%);
+
+}
 </style>
 

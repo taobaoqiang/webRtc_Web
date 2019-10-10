@@ -219,6 +219,19 @@ export default {
         }
       }
 
+            // 选举办法低于百分之50 不允许进行下一步流程
+      if (index == 4 && state.data[4].status == 2) {
+        let applay = state.confirm.length,
+            party = state.party.length;
+     
+        if (applay / party < 0.5) {
+          this.$message({
+            message: "通过人数低于50% 无法进行下一步",
+            type: "warning"
+          });
+          return true;
+        }
+      }
             // 监票人建议名单低于百分之50 不允许进行下一步流程
       if (index == 5 && state.data[5].status == 2) {
         let applay = state.confirm.length,
